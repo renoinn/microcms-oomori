@@ -1,21 +1,23 @@
 import { defineNuxtConfig } from 'nuxt'
+const { API_KEY, SERVICE_DOMAIN } = process.env;
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
-  // typescript: {
-  //   tsConfig: {
-  //     compilerOptions: {
-  //       module: "exnext",
-  //       transformMixedEsModules: true,
-  //     },
-  //   }
+  // privateRuntimeConfig: {
+  //   apiKey: API_KEY,
+  //   serviceDomain: SERVICE_DOMAIN,
   // },
-  // buildModules: ['nuxt-microcms-module'],
-  // microcms: {
-  //   options: {
-  //     serviceDomain: "oomori.microcms.io", // YOUR_DOMAIN is the XXXX part of XXXX.microcms.io
-  //     apiKey: "34fef27b628a4425be54eeca2443222d6d93",
-  //   },
-  //   mode: process.env.NODE_ENV === 'production' ? 'server' : 'all',
+  // publicRuntimeConfig: {
+  //   apiKey: process.env.NODE_ENV !== 'production' ? API_KEY : undefined,
+  //   serviceDomain: process.env.NODE_ENV !== 'production' ? SERVICE_DOMAIN : undefined,
   // },
+  ssr: true,
+  runtimeConfig: {
+    apiKey: API_KEY,
+    serviceDomain: SERVICE_DOMAIN,
+    public: {
+      apiKey: process.env.NODE_ENV !== 'production' ? API_KEY : undefined,
+      serviceDomain: process.env.NODE_ENV !== 'production' ? SERVICE_DOMAIN : undefined,
+    }
+  }
 })

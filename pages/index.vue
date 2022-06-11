@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { Content } from '@/composables/contentList'
+import { Content } from '@/server/types'
+import { MicroCMSListContent, MicroCMSListResponse } from 'microcms-js-sdk'
 
-const result = ref<Array<Content>>([])
-const contents = await contentList()
-result.value = contents.contents
+const { data: posts } = await useFetch<MicroCMSListResponse<Content>>('/api/contentList')
 </script>
 
 <template>
   <ul>
-    <li v-for="item in result" :key="item.id">
+    <li v-for="item in posts.contents" :key="item.id">
       <p>{{ item.title}}</p>
     </li>
   </ul>
